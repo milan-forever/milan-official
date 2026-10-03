@@ -112,6 +112,7 @@ function renderBracket(contestants, stages) {
 
     const column = document.createElement('div');
     column.className = `column column-${stageIndex + 1}`;
+    column.dataset.roundLabel = stage.label;
     const isFirstRound = stageIndex === 0;
     const isFinal = stageIndex === stages.length - 1;
     const accentClass = accentClasses[stageIndex] || 'accent-default';
@@ -132,7 +133,15 @@ function renderBracket(contestants, stages) {
       winner.append(createTeamCard(stage.contestants[0], accentClass, teamById, true), createTrophyBadge());
       column.append(winner);
     } else {
-      stage.contestants.forEach((id) => column.append(createTeamCard(id, accentClass, teamById)));
+      for (let index = 0; index < stage.contestants.length; index += 2) {
+        const pair = document.createElement('div');
+        pair.className = 'match-pair';
+        pair.append(
+          createTeamCard(stage.contestants[index], accentClass, teamById),
+          createTeamCard(stage.contestants[index + 1], accentClass, teamById),
+        );
+        column.append(pair);
+      }
     }
 
     bracket.append(column);
@@ -152,6 +161,23 @@ function renderBracket(contestants, stages) {
 
 function layoutBracket() {
   if (columns.length === 0) return;
+
+  if (window.matchMedia('(max-width: 700px)').matches) {
+    bracket.style.height = '';
+    columns.forEach((column) => {
+      column.style.height = '';
+      column.querySelectorAll('.team-card').forEach((card) => {
+        card.style.position = '';
+        card.style.top = '';
+      });
+    });
+    columns.at(-1).querySelector('.winner-wrapper').style.top = '';
+    connectors.forEach((connector) => {
+      connector.style.height = '';
+    });
+    return;
+  }
+
   const firstColumn = columns[0];
   const bracketTop = bracket.getBoundingClientRect().top;
   const bracketHeight = firstColumn.offsetHeight;

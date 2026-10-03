@@ -220,6 +220,109 @@
     :root[data-theme="light"] .theme-icon-sun { display: none; }
     :root[data-theme="light"] .theme-icon-moon { display: block; }
 
+    /* ── Hamburger button (mobile only) ── */
+    .hamburger {
+      display: none;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.18s ease;
+    }
+    .hamburger:hover { background: var(--surface-2); }
+    .hamburger svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--text-primary);
+      stroke-width: 2;
+      stroke-linecap: round;
+      fill: none;
+    }
+
+    /* ── Mobile nav drawer ── */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 200;
+    }
+    .mobile-nav.is-open { display: block; }
+    .mobile-nav-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(2px);
+    }
+    .mobile-nav-drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 260px;
+      height: 100%;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      overflow-y: auto;
+      animation: slideIn 0.22s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to   { transform: translateX(0); }
+    }
+    .mobile-nav-close {
+      align-self: flex-end;
+      margin-right: 16px;
+      margin-bottom: 12px;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .mobile-nav-close svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text-primary);
+      stroke-width: 2;
+      stroke-linecap: round;
+      fill: none;
+    }
+    .mobile-nav-links {
+      display: flex;
+      flex-direction: column;
+    }
+    .mobile-nav-link {
+      display: flex;
+      align-items: center;
+      padding: 14px 24px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      border-top: 1px solid var(--border);
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .mobile-nav-link:first-child { border-top: none; }
+    .mobile-nav-link:hover,
+    .mobile-nav-link.is-primary {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
     /* ── Page wrapper ── */
     .page {
       flex: 1;
@@ -268,6 +371,12 @@
       width: 100%;
       max-width: 760px;
       text-align: center;
+    }
+
+    .page-view[data-view="tournament"] {
+      width: 100%;
+      max-width: 1640px;
+      min-width: 0;
     }
 
     .page-view--simple .page-header {
@@ -568,50 +677,80 @@
       margin-top: 12px;
     }
 
-    @media (max-width: 600px) {
-      .topbar {
-        padding: 10px 20px;
-      }
+    /* ── Mobile responsive ── */
+    @media (max-width: 700px) {
+      /* Topbar: hide desktop links, show hamburger */
+      .topbar { padding: 10px 14px; gap: 10px; }
+      .topbar-brand { min-width: 0; gap: 8px; }
+      .topbar-brand img { width: 32px !important; height: 32px !important; }
+      .topbar-actions { display: none; }
+      .hamburger { display: grid; }
+      .topbar-name { min-width: 0; font-size: 17px; white-space: nowrap; }
+      .theme-toggle, .hamburger { width: 38px; height: 38px; }
+      .theme-toggle { margin-left: auto; }
 
-      .topbar-name {
-        font-size: 20px;
-      }
+      /* Page spacing */
+      .page { min-width: 0; padding: 24px 14px 36px; }
+      .page-header { width: 100%; margin-bottom: 22px; }
+      .page-header-title { font-size: 24px; line-height: 1.25; overflow-wrap: anywhere; }
+      .page-header-sub { font-size: 14px; line-height: 1.5; }
+      .page-header-sub a { overflow-wrap: anywhere; }
 
-      .topbar-actions {
-        gap: 8px;
-      }
+      /* Content cards */
+      .simple-card { padding: 20px 16px; }
+      .simple-card p { font-size: 15px; }
 
-      .topbar-link {
-        font-size: 10px;
-        padding: 0 12px;
+      /* Stack bracket rounds so the page remains readable without sideways scrolling. */
+      .page-view[data-view="tournament"] { max-width: 560px; }
+      .bracket-shell { min-width: 0; padding: 14px 12px 20px; border-radius: 10px; overflow: visible; }
+      .round-labels { display: none; }
+      .bracket { min-width: 0 !important; height: auto !important; flex-direction: column; gap: 20px; }
+      .column { width: 100%; height: auto !important; gap: 8px; }
+      .column::before {
+        content: attr(data-round-label);
+        display: block;
+        margin-bottom: 4px;
+        color: var(--text-muted);
+        font-family: 'IBM Plex Mono', 'Courier New', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        text-align: left;
+        text-transform: uppercase;
       }
+      .column-1 { padding-top: 0; gap: 10px; }
+      .match-pair { position: relative; gap: 10px; padding-left: 12px; }
+      .match-pair::before {
+        content: '';
+        position: absolute;
+        top: 21px;
+        bottom: 21px;
+        left: 0;
+        width: 12px;
+        border: 1px solid var(--connector);
+        border-right: 0;
+        border-radius: 3px 0 0 3px;
+        pointer-events: none;
+      }
+      .connector-col { display: none; }
+      .team-card { height: 42px; }
+      .team-name { font-size: 13px; }
+      .winner-wrapper { position: static; }
+      .trophy-badge { margin-top: 10px; }
 
+      /* News */
+      .news-card-image { height: 180px; }
+      .news-card-body { padding: 16px 16px 20px; }
+      .news-card-title { font-size: 18px; }
+      .news-card-text { font-size: 14px; }
+
+      /* Footer: stack vertically */
       .footer {
-        padding: 18px 20px;
+        padding: 14px 16px;
+        flex-direction: column;
+        gap: 3px;
+        text-align: center;
       }
-    }
-
-    @media (max-width: 380px) {
-      .topbar {
-        padding: 14px 12px;
-      }
-
-      .topbar-brand {
-        gap: 8px;
-      }
-
-      .topbar-name {
-        font-size: 16px;
-      }
-
-      .theme-toggle {
-        width: 36px;
-        height: 36px;
-      }
-
-      .page-header-title {
-        font-size: 30px;
-      }
+      .footer-dot { display: none; }
     }
   </style>
 </head>
@@ -639,7 +778,34 @@
         <path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"></path>
       </svg>
     </button>
+    <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
   </nav>
+
+  <!-- ── Mobile nav drawer ── -->
+  <div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Navigation menu" aria-modal="true">
+    <div class="mobile-nav-overlay"></div>
+    <div class="mobile-nav-drawer">
+      <button class="mobile-nav-close" type="button" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="5" y1="5" x2="19" y2="19"/>
+          <line x1="19" y1="5" x2="5" y2="19"/>
+        </svg>
+      </button>
+      <nav class="mobile-nav-links">
+        <a class="mobile-nav-link" data-page="home" href="#/home">Home</a>
+        <a class="mobile-nav-link" data-page="news" href="#/news">News</a>
+        <a class="mobile-nav-link" data-page="tournament" href="#/tournament">2026 Tournament</a>
+        <a class="mobile-nav-link" href="https://discord.gg/32qcG3Fh8H" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a class="mobile-nav-link" href="https://www.youtube.com/@MilanGOVchannel" target="_blank" rel="noopener noreferrer">Youtube</a>
+      </nav>
+    </div>
+  </div>
 
   <!-- ── Main page ── -->
   <main class="page">
@@ -688,6 +854,7 @@
   <script>
     const pageViews = [...document.querySelectorAll('[data-view]')];
     const pageLinks = [...document.querySelectorAll('.topbar-link[data-page]')];
+    const mobilePageLinks = [...document.querySelectorAll('.mobile-nav-link[data-page]')];
     const pageTitles = {
       home: 'Milan official',
       news: 'News | Milan official',
@@ -702,6 +869,15 @@
         view.hidden = view.dataset.view !== activePage;
       });
       pageLinks.forEach((link) => {
+        const isActive = link.dataset.page === activePage;
+        link.classList.toggle('is-primary', isActive);
+        if (isActive) {
+          link.setAttribute('aria-current', 'page');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+      mobilePageLinks.forEach((link) => {
         const isActive = link.dataset.page === activePage;
         link.classList.toggle('is-primary', isActive);
         if (isActive) {
@@ -733,6 +909,41 @@
       } catch (error) {
         if (!(error instanceof DOMException && error.name === 'SecurityError')) throw error;
         console.warn('Theme preference could not be saved to local storage.', error);
+      }
+    });
+
+    /* ── Mobile nav drawer ── */
+    const hamburger   = document.querySelector('.hamburger');
+    const mobileNav   = document.getElementById('mobile-nav');
+    const mobileClose = document.querySelector('.mobile-nav-close');
+    const mobileOverlay = document.querySelector('.mobile-nav-overlay');
+
+    const openMobileNav = () => {
+      mobileNav.classList.add('is-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeMobileNav = () => {
+      mobileNav.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+
+    hamburger.addEventListener('click', openMobileNav);
+    mobileClose.addEventListener('click', closeMobileNav);
+    mobileOverlay.addEventListener('click', closeMobileNav);
+
+    // Close drawer when a link is tapped
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', closeMobileNav);
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) {
+        closeMobileNav();
+        hamburger.focus();
       }
     });
   </script>
