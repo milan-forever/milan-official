@@ -258,6 +258,52 @@
       color: var(--accent-mid);
     }
 
+    .page-view[hidden] {
+      display: none;
+    }
+
+    .page-view--simple {
+      width: 100%;
+      max-width: 760px;
+      text-align: center;
+    }
+
+    .page-view--simple .page-header {
+      margin-bottom: 28px;
+    }
+
+    .simple-card {
+      width: 100%;
+      padding: 28px;
+      background: var(--shell-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .simple-card p {
+      color: var(--text-muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .simple-card a {
+      display: inline-flex;
+      margin-top: 20px;
+      padding: 10px 16px;
+      border: 1px solid var(--accent-border);
+      border-radius: 8px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.18s ease;
+    }
+
+    .simple-card a:hover {
+      background: var(--accent-soft);
+    }
+
     /* ── Bracket shell ── */
     .bracket-shell {
       background: var(--shell-bg);
@@ -520,9 +566,9 @@
       <span class="topbar-name">Milan official</span>
     </div>
     <div class="topbar-actions">
-      <a class="topbar-link" href="#">Home</a>
-      <a class="topbar-link" href="#">News</a>
-      <a class="topbar-link is-primary" href="#tournament">2026 Tournament</a>
+      <a class="topbar-link" data-page="home" href="#/home">Home</a>
+      <a class="topbar-link" data-page="news" href="#/news">News</a>
+      <a class="topbar-link" data-page="tournament" href="#/tournament">2026 Tournament</a>
       <a class="topbar-link" href="https://discord.gg/32qcG3Fh8H" target="_blank" rel="noopener noreferrer">Discord</a>
       <a class="topbar-link" href="https://www.youtube.com/@MilanGOVchannel" target="_blank" rel="noopener noreferrer">Youtube</a>
     </div>
@@ -540,16 +586,39 @@
   <!-- ── Main page ── -->
   <main class="page">
 
-    <header class="page-header">
-      <h1 class="page-header-title">Milan Fat Tournament 2026</h1>
-      <p class="page-header-sub"><a href="https://discord.gg/32qcG3Fh8H" target="_blank" rel="noopener noreferrer">Vote for the winner on our Discord server</a></p>
-    </header>
+    <section class="page-view page-view--simple" data-view="home" aria-labelledby="home-title">
+      <header class="page-header">
+        <h1 class="page-header-title" id="home-title">Welcome to Milan official</h1>
+        <p class="page-header-sub">Your home for Milan community updates and events.</p>
+      </header>
+      <div class="simple-card">
+        <p>Follow the latest news or check out the 2026 tournament.</p>
+        <a href="#/tournament">Explore the tournament</a>
+      </div>
+    </section>
 
-    <div class="bracket-shell" id="tournament">
+    <section class="page-view page-view--simple" data-view="news" aria-labelledby="news-title" hidden>
+      <header class="page-header">
+        <h1 class="page-header-title" id="news-title">News</h1>
+        <p class="page-header-sub">Updates from the Milan community.</p>
+      </header>
+      <div class="simple-card">
+        <p>There are no news updates yet. Check back soon.</p>
+      </div>
+    </section>
 
-      <div class="round-labels"></div>
-      <div class="bracket"></div>
-    </div>
+    <section class="page-view" data-view="tournament" aria-labelledby="tournament-title" hidden>
+      <header class="page-header">
+        <h1 class="page-header-title" id="tournament-title">Milan Fat Tournament 2026</h1>
+        <p class="page-header-sub"><a href="https://discord.gg/32qcG3Fh8H" target="_blank" rel="noopener noreferrer">Vote for the winner on our Discord server</a></p>
+      </header>
+
+      <div class="bracket-shell">
+
+        <div class="round-labels"></div>
+        <div class="bracket"></div>
+      </div>
+    </section>
 
   </main>
 
@@ -561,6 +630,36 @@
   </footer>
 
   <script>
+    const pageViews = [...document.querySelectorAll('[data-view]')];
+    const pageLinks = [...document.querySelectorAll('.topbar-link[data-page]')];
+    const pageTitles = {
+      home: 'Milan official',
+      news: 'News | Milan official',
+      tournament: 'Milan Fat Tournament 2026 | Milan official',
+    };
+
+    const updatePage = () => {
+      const requestedPage = window.location.hash.slice(2);
+      const activePage = pageTitles[requestedPage] ? requestedPage : 'home';
+
+      pageViews.forEach((view) => {
+        view.hidden = view.dataset.view !== activePage;
+      });
+      pageLinks.forEach((link) => {
+        const isActive = link.dataset.page === activePage;
+        link.classList.toggle('is-primary', isActive);
+        if (isActive) {
+          link.setAttribute('aria-current', 'page');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+      document.title = pageTitles[activePage];
+    };
+
+    window.addEventListener('hashchange', updatePage);
+    updatePage();
+
     const themeToggle = document.querySelector('.theme-toggle');
     const updateThemeToggle = () => {
       const nextLabel = `Switch to ${document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'} theme`;
