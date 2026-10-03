@@ -1,19 +1,4 @@
-// Edit each contestant's name and flag here. Flags accept country codes or emoji.
-const contestants = [
-  { id: 'laffru', name: 'laffru', flag: 'ru' },
-  { id: 'skoda124', name: 'skoda124', flag: 'ru' },
-  { id: 'maxxikek', name: 'maxxiKEK', flag: 'ua' },
-  { id: 'sanekek', name: 'saneKEK', flag: 'ua' },
-  { id: 'questbee', name: 'Questbee', flag: 'ru' },
-  { id: 'chabupel', name: 'ChabupeL', flag: 'ru' },
-  { id: 'deltovv', name: 'Deltovv', flag: 'ru' },
-  { id: 'realgangster', name: 'Realgangster', flag: 'ua' },
-  { id: 'aguzok', name: 'Aguzok', flag: 'ru' },
-  { id: 'dokezq', name: 'dokezq', flag: 'ru' },
-  { id: 'khalif', name: 'Khalif', flag: 'de' },
-  { id: 'maximys', name: 'maximys320', flag: 'sk' },
-  { id: '?', name: '', flag: '' },
-];
+import { contestants, stages } from './tournament.json';
 
 const flagEmojis = {
   us: '🇺🇸',
@@ -24,48 +9,6 @@ const flagEmojis = {
   uz: '🇺🇿',
 };
 
-// List contestant IDs in bracket order. The first round pairs adjacent entries;
-// each following stage lists the contestants who advanced from the previous one.
-const stages = [
-  {
-    label: 'Round of 32',
-    contestants: [
-      'laffru', 'skoda124', 'maxxikek', 'sanekek',
-      'questbee', 'chabupel', 'deltovv', 'realgangster',
-      'aguzok', 'dokezq', 'khalif', 'maximys',
-      '?', '?', '?', '?',
-      '?', '?', '?', '?',
-      '?', '?', '?', '?',
-      '?', '?', '?', '?',
-      '?', '?', '?', '?',
-    ],
-  },
-  {
-    label: 'Round of 16',
-    contestants: [
-      'laffru', 'maxxikek', '?', 'realgangster',
-      'aguzok', '?', '?', '?',
-      '?', '?', '?', '?',
-      '?', '?', '?', '?',
-    ],
-  },
-  {
-    label: 'Round of 8',
-    contestants: ['?', '?', '?', '?', '?', '?', '?', '?'],
-  },
-  {
-    label: 'Quarter-finals',
-    contestants: ['?', '?', '?', '?'],
-  },
-  {
-    label: 'Semi-finals',
-    contestants: ['?', '?'],
-  },
-  {
-    label: 'Final',
-    contestants: ['?'],
-  },
-];
 
 const accentClasses = [
   'accent-round1',
@@ -148,7 +91,7 @@ function createTrophyBadge() {
 
   const label = document.createElement('span');
   label.className = 'trophy-badge-label';
-  label.textContent = 'Champion';
+  label.textContent = 'Чемпион';
   badge.append(icon, label);
   return badge;
 }

@@ -1,0 +1,57 @@
+{
+  "contestants": [
+    { "id": "laffru",        "name": "laffru",        "flag": "ru" },
+    { "id": "skoda124",      "name": "skoda124",      "flag": "ru" },
+    { "id": "maxxikek",      "name": "maxxiKEK",      "flag": "ua" },
+    { "id": "sanekek",       "name": "saneKEK",       "flag": "ua" },
+    { "id": "questbee",      "name": "Questbee",      "flag": "ru" },
+    { "id": "chabupel",      "name": "ChabupeL",      "flag": "ru" },
+    { "id": "deltovv",       "name": "Deltovv",       "flag": "ru" },
+    { "id": "realgangster",  "name": "Realgangster",  "flag": "ua" },
+    { "id": "aguzok",        "name": "Aguzok",        "flag": "ru" },
+    { "id": "dokezq",        "name": "dokezq",        "flag": "ru" },
+    { "id": "khalif",        "name": "Khalipf",        "flag": "de" },
+    { "id": "maximys",       "name": "Maximys_",    "flag": "sk" },
+    { "id": "?",             "name": "",              "flag": ""   }
+  ],
+  "stages": [
+    {
+      "label": "1/16 финала",
+      "contestants": [
+        "laffru", "skoda124", "maxxikek", "sanekek",
+        "questbee", "chabupel", "deltovv", "realgangster",
+        "aguzok", "dokezq", "khalif", "maximys",
+        "?", "?", "?", "?",
+        "?", "?", "?", "?",
+        "?", "?", "?", "?",
+        "?", "?", "?", "?",
+        "?", "?", "?", "?"
+      ]
+    },
+    {
+      "label": "1/8 финала",
+      "contestants": [
+        "laffru", "maxxikek", "?", "realgangster",
+        "aguzok", "?", "?", "?",
+        "?", "?", "?", "?",
+        "?", "?", "?", "?"
+      ]
+    },
+    {
+      "label": "Четвертьфинал",
+      "contestants": ["?", "?", "?", "?", "?", "?", "?", "?"]
+    },
+    {
+      "label": "Полуфинал",
+      "contestants": ["?", "?", "?", "?"]
+    },
+    {
+      "label": "Финал",
+      "contestants": ["?", "?"]
+    },
+    {
+      "label": "Победитель",
+      "contestants": ["?"]
+    }
+  ]
+}
