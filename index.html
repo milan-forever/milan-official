@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('milan-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.dataset.theme = savedTheme;
+      }
+    } catch (error) {
+      if (!(error instanceof DOMException && error.name === 'SecurityError')) throw error;
+      console.warn('Theme preference could not be read from local storage.', error);
+    }
+  </script>
+  <title>Milan official</title>
+  <link rel="icon" type="image/png" href="flag.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Design tokens ── */
+    :root {
+      color-scheme: dark;
+      --bg:            #191815;
+      --surface:       #36342f;
+      --surface-2:     #302d27;
+      --border:        #454037;
+      --text-primary:  #f2eee5;
+      --text-muted:    #b3aa98;
+      --topbar-bg:     rgba(25,24,21,.9);
+      --shell-bg:      rgba(37,35,31,.88);
+
+      --accent:        #e2b94f;
+      --accent-mid:    #c99b38;
+      --accent-soft:   #39311e;
+      --accent-border: #66552e;
+      --connector:     #5b5549;
+      --winner-bg:     #493b20;
+      --winner-border: #d6a93d;
+      --winner-text:   #fff0c2;
+      --trophy-bg:     #39311e;
+      --trophy-text:   #f0c75e;
+      --footer-bg:     #110f0c;
+      --footer-text:   #c1b7a4;
+
+      --radius:        10px;
+      --shadow:        0 1px 4px rgba(0,0,0,.2), 0 4px 16px rgba(0,0,0,.16);
+      --shadow-hover:  0 2px 8px rgba(0,0,0,.28), 0 8px 24px rgba(0,0,0,.22);
+
+      /* card geometry — single source of truth */
+      --card-h: 40px;
+      --card-inner-gap: calc(var(--card-h) * 0.3);
+      --match-pair-gap: calc(var(--card-h) * 0.8);
+    }
+
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg:            #f5f0e8;
+      --surface:       #ede8de;
+      --surface-2:     #e4ddd0;
+      --border:        #d5cebd;
+      --text-primary:  #1a1410;
+      --text-muted:    #7a6f5e;
+      --topbar-bg:     rgba(245,240,232,.9);
+      --shell-bg:      rgba(255,252,247,.78);
+      --accent:        #946900;
+      --accent-mid:    #d4a017;
+      --accent-soft:   #fdf3d0;
+      --accent-border: #e8d58a;
+      --connector:     #d1c7b8;
+      --winner-bg:     #fff0c8;
+      --winner-border: #d69b00;
+      --winner-text:   #634800;
+      --trophy-bg:     #fff5d9;
+      --trophy-text:   #805b00;
+      --footer-bg:     #1a1410;
+      --footer-text:   #c1b7a4;
+      --shadow:        0 1px 4px rgba(60,40,10,.08), 0 4px 16px rgba(60,40,10,.06);
+      --shadow-hover:  0 2px 8px rgba(60,40,10,.12), 0 8px 24px rgba(60,40,10,.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background-color: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top nav bar ── */
+    .topbar {
+      width: 100%;
+      padding: 14px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--topbar-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      gap: 20px;
+    }
+
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .topbar-logo {
+      width: 30px;
+      height: 30px;
+      background: var(--accent-mid);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .topbar-logo svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+    }
+
+    .topbar-name {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      color: var(--text-primary);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      flex-wrap: wrap;
+      gap: 0;
+      margin-right: auto;
+    }
+
+    .topbar-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 24px;
+      min-height: 28px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      position: relative;
+      transition: color 0.18s ease;
+      border-left: 1px solid var(--border);
+    }
+
+    .topbar-link:first-child {
+      border-left: none;
+      padding-left: 0;
+    }
+
+    .topbar-link:hover {
+      color: var(--accent);
+    }
+
+    .topbar-link.is-primary {
+      color: var(--accent);
+    }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      color: var(--text-primary);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .theme-toggle:hover {
+      background: var(--surface-2);
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .theme-icon-moon { display: none; }
+    :root[data-theme="light"] .theme-icon-sun { display: none; }
+    :root[data-theme="light"] .theme-icon-moon { display: block; }
+
+    /* ── Page wrapper ── */
+    .page {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 24px 64px;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .page-header-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      line-height: 1.15;
+      color: var(--text-primary);
+    }
+
+    .page-header-sub {
+      margin-top: 10px;
+      font-size: 15px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .page-header-sub a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .page-header-sub a:hover {
+      color: var(--accent-mid);
+    }
+
+    /* ── Bracket shell ── */
+    .bracket-shell {
+      background: var(--shell-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 40px 44px;
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+      width: 100%;
+      max-width: 1640px;
+    }
+
+    /* ── Round labels row ── */
+    .round-labels {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      min-width: calc(6 * 185px + 5 * 75px);
+      margin-bottom: 10px;
+    }
+
+    .round-label {
+      width: 185px;
+      flex-shrink: 0;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .connector-label {
+      width: 75px;
+      flex-shrink: 0;
+    }
+
+    /* ── Bracket grid ── */
+    .bracket {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      min-width: calc(6 * 185px + 5 * 75px);
+    }
+
+    /* ── Columns ── */
+    .column {
+      width: 185px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .column-1 {
+      padding-top: calc(var(--card-h) * 0.25);
+      gap: var(--match-pair-gap);
+    }
+
+    .match-pair {
+      display: flex;
+      flex-direction: column;
+      gap: var(--card-inner-gap);
+    }
+
+    /* ── Team card ── */
+    .team-card {
+      width: 100%;
+      height: var(--card-h);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      transition: box-shadow 0.18s ease, background 0.18s ease;
+      cursor: default;
+      flex-shrink: 0;
+    }
+
+    .team-card:hover {
+      background: var(--surface-2);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .accent-bar {
+      width: 4px;
+      height: 100%;
+      flex-shrink: 0;
+    }
+
+    .accent-round1 { background: #c2beb1; }
+    .accent-round2  { background: #b6a06e; }
+    .accent-round3  { background: #cfa541; }
+    .accent-round4  { background: #df901a; }
+    .accent-round5  { background: #e46115; }
+    .accent-winner  { background: #ff1c2e; }
+
+    .team-name {
+      flex: 1;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      color: var(--text-primary);
+      padding: 0 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .team-flag {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 20px;
+      font-size: 18px;
+      line-height: 1;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ── Winner card ── */
+    .team-card.is-winner {
+      background: var(--winner-bg);
+      border-color: var(--winner-border);
+    }
+
+    .team-card.is-winner .team-name {
+      color: var(--winner-text);
+      font-weight: 700;
+    }
+
+    /* ── SVG Connectors ── */
+    .connector-col {
+      width: 75px;
+      flex-shrink: 0;
+    }
+
+    .connector-col svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    /* ── Winner wrapper & trophy badge ── */
+    .winner-wrapper {
+      position: absolute;
+      left: 0;
+      width: 100%;
+    }
+
+    .trophy-badge {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--trophy-bg);
+      border: 1px solid var(--winner-border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .trophy-badge svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--trophy-text);
+      flex-shrink: 0;
+    }
+
+    .trophy-badge-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--trophy-text);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      width: 100%;
+      padding: 20px 48px;
+      background: var(--footer-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: var(--footer-text);
+      font-weight: 500;
+    }
+
+    .footer-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-mid);
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        padding: 10px 20px;
+      }
+
+      .topbar-name {
+        font-size: 20px;
+      }
+
+      .topbar-actions {
+        gap: 8px;
+      }
+
+      .topbar-link {
+        font-size: 10px;
+        padding: 0 12px;
+      }
+
+      .footer {
+        padding: 18px 20px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .topbar {
+        padding: 14px 12px;
+      }
+
+      .topbar-brand {
+        gap: 8px;
+      }
+
+      .topbar-name {
+        font-size: 16px;
+      }
+
+      .theme-toggle {
+        width: 36px;
+        height: 36px;
+      }
+
+      .page-header-title {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top navigation bar ── -->
+  <nav class="topbar">
+    <div class="topbar-brand">
+      <img src="flag.png" alt="Milan flag" style="width:36px;height:36px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span class="topbar-name">Milan official</span>
+    </div>
+    <div class="topbar-actions">
+      <a class="topbar-link" href="#">Home</a>
+      <a class="topbar-link" href="#">News</a>
+      <a class="topbar-link is-primary" href="#tournament">2026 Tournament</a>
+      <a class="topbar-link" href="https://discord.gg/32qcG3Fh8H" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a class="topbar-link" href="https://www.youtube.com/@MilanGOVchannel" target="_blank" rel="noopener noreferrer">Youtube</a>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch to dark theme">
+      <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>
+      </svg>
+      <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- ── Main page ── -->
+  <main class="page">
+
+    <header class="page-header">
+      <h1 class="page-header-title">Milan Fat Tournament 2026</h1>
+      <p class="page-header-sub"><a href="https://discord.gg/32qcG3Fh8H" target="_blank" rel="noopener noreferrer">Vote for the winner on our Discord server</a></p>
+    </header>
+
+    <div class="bracket-shell" id="tournament">
+
+      <div class="round-labels"></div>
+      <div class="bracket"></div>
+    </div>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <span class="footer-text">© 2026 Milan official</span>
+    <div class="footer-dot"></div>
+    <span class="footer-text">All rights reserved</span>
+  </footer>
+
+  <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const updateThemeToggle = () => {
+      const nextLabel = `Switch to ${document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'} theme`;
+      themeToggle.setAttribute('aria-label', nextLabel);
+      themeToggle.title = nextLabel;
+    };
+    updateThemeToggle();
+
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = nextTheme;
+      updateThemeToggle();
+      try {
+        localStorage.setItem('milan-theme', nextTheme);
+      } catch (error) {
+        if (!(error instanceof DOMException && error.name === 'SecurityError')) throw error;
+        console.warn('Theme preference could not be saved to local storage.', error);
+      }
+    });
+  </script>
+  <script type="module" src="bracket.js"></script>
+</body>
+</html>
