@@ -1,6 +1,3 @@
-import news from './news.json';
-
-
 // ── Rendering ──────────────────────────────────────────────────────────────
 
 const newsList = document.querySelector('.news-list');
@@ -52,7 +49,7 @@ function createNewsCard(post) {
   return article;
 }
 
-function renderNews() {
+function renderNews(news) {
   if (!newsList) return;
 
   if (news.length === 0) {
@@ -64,4 +61,10 @@ function renderNews() {
   newsList.replaceChildren(...news.slice().reverse().map(createNewsCard));
 }
 
-renderNews();
+fetch('./news.json')
+  .then((r) => r.json())
+  .then(renderNews)
+  .catch((err) => {
+    console.error('Failed to load news:', err);
+    if (newsList) newsList.innerHTML = '<div class="simple-card"><p>Не удалось загрузить новости.</p></div>';
+  });

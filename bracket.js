@@ -1,5 +1,3 @@
-import { contestants, stages } from './tournament.json';
-
 const flagEmojis = {
   us: '🇺🇸',
   ru: '🇷🇺',
@@ -9,7 +7,6 @@ const flagEmojis = {
   uz: '🇺🇿',
 };
 
-
 const accentClasses = [
   'accent-round1',
   'accent-round2',
@@ -18,31 +15,31 @@ const accentClasses = [
   'accent-round5',
   'accent-winner',
 ];
-const teamById = new Map(contestants.map((contestant) => [contestant.id, contestant]));
+
 const roundLabels = document.querySelector('.round-labels');
 const bracket = document.querySelector('.bracket');
 const connectors = [];
 const columns = [];
 
-function validateBracket() {
+function validateBracket(contestants, stages) {
+  const teamById = new Map(contestants.map((c) => [c.id, c]));
   const unknownIds = new Set();
   stages.forEach((stage, index) => {
     if (index > 0 && stage.contestants.length * 2 !== stages[index - 1].contestants.length) {
       throw new Error(`${stage.label} must contain half as many contestants as the previous stage.`);
     }
     stage.contestants.forEach((id) => {
-      if (!teamById.has(id)) {
-        unknownIds.add(id);
-      }
+      if (!teamById.has(id)) unknownIds.add(id);
     });
   });
   if (unknownIds.size) {
     console.warn(`Unknown contestant IDs: ${[...unknownIds].join(', ')}`);
   }
+  return teamById;
 }
 
-function createTeamCard(id, accentClass, isWinner = false) {
-  const contestant = teamById.get(id) || { name: id, flag: '🇺🇸' };
+function createTeamCard(id, accentClass, teamById, isWinner = false) {
+  const contestant = teamById.get(id) || { name: id, flag: '' };
   const card = document.createElement('div');
   card.className = `team-card${isWinner ? ' is-winner' : ''}${teamById.has(id) ? '' : ' is-unknown'}`;
   if (!teamById.has(id)) card.title = `Unknown contestant ID: ${id}`;
@@ -96,10 +93,12 @@ function createTrophyBadge() {
   return badge;
 }
 
-function renderBracket() {
-  validateBracket();
+function renderBracket(contestants, stages) {
+  const teamById = validateBracket(contestants, stages);
   roundLabels.replaceChildren();
   bracket.replaceChildren();
+  connectors.length = 0;
+  columns.length = 0;
 
   const trackWidth = stages.length * 185 + (stages.length - 1) * 75;
   roundLabels.style.minWidth = `${trackWidth}px`;
@@ -122,18 +121,18 @@ function renderBracket() {
         const pair = document.createElement('div');
         pair.className = 'match-pair';
         pair.append(
-          createTeamCard(stage.contestants[index], accentClass),
-          createTeamCard(stage.contestants[index + 1], accentClass),
+          createTeamCard(stage.contestants[index], accentClass, teamById),
+          createTeamCard(stage.contestants[index + 1], accentClass, teamById),
         );
         column.append(pair);
       }
     } else if (isFinal) {
       const winner = document.createElement('div');
       winner.className = 'winner-wrapper';
-      winner.append(createTeamCard(stage.contestants[0], accentClass, true), createTrophyBadge());
+      winner.append(createTeamCard(stage.contestants[0], accentClass, teamById, true), createTrophyBadge());
       column.append(winner);
     } else {
-      stage.contestants.forEach((id) => column.append(createTeamCard(id, accentClass)));
+      stage.contestants.forEach((id) => column.append(createTeamCard(id, accentClass, teamById)));
     }
 
     bracket.append(column);
@@ -152,6 +151,7 @@ function renderBracket() {
 }
 
 function layoutBracket() {
+  if (columns.length === 0) return;
   const firstColumn = columns[0];
   const bracketTop = bracket.getBoundingClientRect().top;
   const bracketHeight = firstColumn.offsetHeight;
@@ -205,8 +205,15 @@ function layoutBracket() {
   });
 }
 
-renderBracket();
-layoutBracket();
-window.addEventListener('resize', layoutBracket);
-new ResizeObserver(layoutBracket).observe(columns[0]);
-document.fonts.ready.then(layoutBracket);
+fetch('./tournament.json')
+  .then((r) => r.json())
+  .then(({ contestants, stages }) => {
+    renderBracket(contestants, stages);
+    layoutBracket();
+    window.addEventListener('resize', layoutBracket);
+    new ResizeObserver(layoutBracket).observe(columns[0]);
+    document.fonts.ready.then(layoutBracket);
+  })
+  .catch((err) => {
+    console.error('Failed to load tournament data:', err);
+  });
