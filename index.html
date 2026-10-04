@@ -116,6 +116,11 @@
       align-items: center;
       gap: 10px;
       flex-shrink: 0;
+      text-decoration: none;
+    }
+
+    .topbar-brand img {
+      border: 1px solid var(--border);
     }
 
     .topbar-logo {
@@ -758,10 +763,10 @@
 
   <!-- ── Top navigation bar ── -->
   <nav class="topbar">
-    <div class="topbar-brand">
-      <img src="flag.png" alt="Milan flag" style="width:36px;height:36px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+    <a class="topbar-brand" href="#/home" aria-label="Go to home page">
+      <img src="flag.png" alt="Milan flag" style="width:36px;height:36px;border-radius:3px;object-fit:cover;flex-shrink:0;">
       <span class="topbar-name">Milan official</span>
-    </div>
+    </a>
     <div class="topbar-actions">
       <a class="topbar-link" data-page="home" href="#/home">Home</a>
       <a class="topbar-link" data-page="news" href="#/news">News</a>
