@@ -12,6 +12,8 @@
     { "id": "dokezq",        "name": "dokezq",        "flag": "ru" },
     { "id": "khalif",        "name": "Khalipf",        "flag": "de" },
     { "id": "maximys",       "name": "Maximys_",    "flag": "sk" },
+    { "id": "vipenka",       "name": "Vipenka2",    "flag": "ru" },
+    { "id": "dikafe",       "name": "dikafe_ter00r",    "flag": "ua" },
     { "id": "?",             "name": "",              "flag": ""   }
   ],
   "stages": [
@@ -21,7 +23,7 @@
         "laffru", "skoda124", "maxxikek", "sanekek",
         "questbee", "chabupel", "deltovv", "realgangster",
         "aguzok", "dokezq", "khalif", "maximys",
-        "?", "?", "?", "?",
+        "dikafe", "vipenka", "?", "?",
         "?", "?", "?", "?",
         "?", "?", "?", "?",
         "?", "?", "?", "?",
@@ -32,7 +34,7 @@
       "label": "1/8 финала",
       "contestants": [
         "laffru", "maxxikek", "?", "realgangster",
-        "aguzok", "?", "?", "?",
+        "aguzok", "maximys", "?", "?",
         "?", "?", "?", "?",
         "?", "?", "?", "?"
       ]
