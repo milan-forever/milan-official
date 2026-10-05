@@ -116,6 +116,11 @@
       align-items: center;
       gap: 10px;
       flex-shrink: 0;
+      text-decoration: none;
+    }
+
+    .topbar-brand img {
+      border: 1px solid var(--border);
     }
 
     .topbar-logo {
@@ -677,6 +682,244 @@
       margin-top: 12px;
     }
 
+    /* ── News card: stretched-link (whole card is clickable) ── */
+    .news-card { position: relative; }
+
+    .news-card-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* The ::after covers the whole card surface */
+    .news-card-title a::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+
+    /* Share button must sit above the stretched link */
+    .news-card-footer { position: relative; z-index: 1; }
+
+    /* ── News card footer (share row) ── */
+    .news-card-footer {
+      padding: 0 28px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── Article view ── */
+    .article-shell {
+      width: 100%;
+      background: var(--shell-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden; /* clips image to card corners */
+      text-align: left;
+    }
+
+    /* Full-bleed image at top of card */
+    .article-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .article-image[hidden] { display: none; }
+
+    /* Header block: date + title */
+    .article-inner-header {
+      padding: 28px 32px 0;
+    }
+
+    .article-date-tag {
+      display: block;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .article-title {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-primary);
+    }
+
+    /* Body text */
+    .article-body {
+      padding: 22px 32px 0;
+    }
+
+    .article-body .article-paragraph {
+      color: var(--text-muted);
+      font-size: 16px;
+      line-height: 1.85;
+    }
+
+    .article-body .article-paragraph + .article-paragraph {
+      margin-top: 16px;
+    }
+
+    /* Action bar */
+    .article-actions {
+      margin: 24px 32px 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .article-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+    }
+
+    .article-back-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    .article-share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+    }
+
+    .article-share-btn svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .article-share-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    .article-share-btn .share-tooltip {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 10px;
+      color: var(--accent);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .article-share-btn.copied .share-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .news-share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: color 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+      position: relative;
+    }
+
+    .news-share-btn svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .news-share-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    .news-share-btn .share-tooltip {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      color: var(--accent);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .news-share-btn.copied .share-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     /* ── Mobile responsive ── */
     @media (max-width: 700px) {
       /* Topbar: hide desktop links, show hamburger */
@@ -740,8 +983,17 @@
       /* News */
       .news-card-image { height: 180px; }
       .news-card-body { padding: 16px 16px 20px; }
+      .news-card-footer { padding: 0 16px 16px; }
       .news-card-title { font-size: 18px; }
       .news-card-text { font-size: 14px; }
+
+      /* Article */
+      .article-shell { border-radius: 12px; }
+      .article-image { max-height: 220px; }
+      .article-inner-header { padding: 18px 18px 0; }
+      .article-title { font-size: 20px; }
+      .article-body { padding: 16px 18px 0; }
+      .article-actions { margin: 20px 18px 20px; }
 
       /* Footer: stack vertically */
       .footer {
@@ -758,10 +1010,10 @@
 
   <!-- ── Top navigation bar ── -->
   <nav class="topbar">
-    <div class="topbar-brand">
-      <img src="flag.png" alt="Milan flag" style="width:36px;height:36px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+    <a class="topbar-brand" href="#/home" aria-label="Go to home page">
+      <img src="flag.png" alt="Milan flag" style="width:36px;height:36px;border-radius:3px;object-fit:cover;flex-shrink:0;">
       <span class="topbar-name">Milan official</span>
-    </div>
+    </a>
     <div class="topbar-actions">
       <a class="topbar-link" data-page="home" href="#/home">Home</a>
       <a class="topbar-link" data-page="news" href="#/news">News</a>
@@ -829,6 +1081,28 @@
       <div class="news-list"></div>
     </section>
 
+    <section class="page-view page-view--simple" data-view="article" aria-labelledby="article-title" hidden>
+      <div class="article-shell">
+        <img class="article-image" src="" alt="" hidden>
+        <div class="article-inner-header">
+          <time class="article-date-tag"></time>
+          <h1 class="article-title" id="article-title"></h1>
+        </div>
+        <div class="article-body"></div>
+        <div class="article-actions">
+          <a class="article-back-btn" href="#/news">← Назад к новостям</a>
+          <button type="button" class="article-share-btn" aria-label="Copy link to this post">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            Share
+            <span class="share-tooltip" aria-live="polite">Copied!</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
     <section class="page-view" data-view="tournament" aria-labelledby="tournament-title" hidden>
       <header class="page-header">
         <h1 class="page-header-title" id="tournament-title">Миланский Жировой турнир 2026</h1>
@@ -862,14 +1136,24 @@
     };
 
     const updatePage = () => {
-      const requestedPage = window.location.hash.slice(2);
-      const activePage = pageTitles[requestedPage] ? requestedPage : 'home';
+      const hash = window.location.hash.slice(2); // strip '#/'
+
+      let activePage;
+      if (hash.startsWith('news/')) {
+        activePage = 'article';
+      } else {
+        activePage = pageTitles[hash] ? hash : 'home';
+      }
 
       pageViews.forEach((view) => {
         view.hidden = view.dataset.view !== activePage;
       });
+
+      // For articles, keep the "news" nav link highlighted
+      const navPage = activePage === 'article' ? 'news' : activePage;
+
       pageLinks.forEach((link) => {
-        const isActive = link.dataset.page === activePage;
+        const isActive = link.dataset.page === navPage;
         link.classList.toggle('is-primary', isActive);
         if (isActive) {
           link.setAttribute('aria-current', 'page');
@@ -878,7 +1162,7 @@
         }
       });
       mobilePageLinks.forEach((link) => {
-        const isActive = link.dataset.page === activePage;
+        const isActive = link.dataset.page === navPage;
         link.classList.toggle('is-primary', isActive);
         if (isActive) {
           link.setAttribute('aria-current', 'page');
@@ -886,7 +1170,11 @@
           link.removeAttribute('aria-current');
         }
       });
-      document.title = pageTitles[activePage];
+
+      // Article title is set by news.js after data loads
+      if (activePage !== 'article') {
+        document.title = pageTitles[activePage];
+      }
     };
 
     window.addEventListener('hashchange', updatePage);
