@@ -16,6 +16,8 @@
     { "id": "dikafe",       "name": "dikafe_ter00r",    "flag": "ua" },
     { "id": "egorbro",       "name": "egorbro",    "flag": "ru" },
     { "id": "taziks",       "name": "Taziks228",    "flag": "ru" },
+    { "id": "snowfenics",   "name": "snowfenics",    "flag": "ru" },
+    { "id": "assetick",       "name": "Assetick",    "flag": "ua" },
     { "id": "?",             "name": "",              "flag": ""   }
   ],
   "stages": [
@@ -26,7 +28,7 @@
         "questbee", "chabupel", "deltovv", "realgangster",
         "aguzok", "dokezq", "khalif", "maximys",
         "dikafe", "vipenka", "egorbro", "taziks",
-        "?", "?", "?", "?",
+        "snowfenics", "assetick", "?", "?",
         "?", "?", "?", "?",
         "?", "?", "?", "?",
         "?", "?", "?", "?"
@@ -36,7 +38,7 @@
       "label": "1/8 финала",
       "contestants": [
         "laffru", "maxxikek", "?", "realgangster",
-        "aguzok", "maximys", "dikafe", "?",
+        "aguzok", "maximys", "dikafe", "taziks",
         "?", "?", "?", "?",
         "?", "?", "?", "?"
       ]
