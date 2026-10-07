@@ -1,4 +1,4 @@
-import tournament from './tournament.json';
+import tournament from './tournament-data.js';
 
 const flagEmojis = {
   us: '🇺🇸',

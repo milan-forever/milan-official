@@ -1,0 +1,65 @@
+export default {
+  contestants: [
+    { id: 'laffru', name: 'laffru', flag: 'ru' },
+    { id: 'skoda124', name: 'skoda124', flag: 'ru' },
+    { id: 'maxxikek', name: 'maxxiKEK', flag: 'ua' },
+    { id: 'sanekek', name: 'saneKEK', flag: 'ua' },
+    { id: 'questbee', name: 'Questbee', flag: 'ru' },
+    { id: 'chabupel', name: 'ChabupeL', flag: 'ru' },
+    { id: 'deltovv', name: 'Deltovv', flag: 'ru' },
+    { id: 'realgangster', name: 'Realgangster', flag: 'ua' },
+    { id: 'aguzok', name: 'Aguzok', flag: 'ru' },
+    { id: 'dokezq', name: 'dokezq', flag: 'ru' },
+    { id: 'khalif', name: 'Khalipf', flag: 'de' },
+    { id: 'maximys', name: 'Maximys_', flag: 'sk' },
+    { id: 'vipenka', name: 'Vipenka2', flag: 'ru' },
+    { id: 'dikafe', name: 'dikafe_ter00r', flag: 'ua' },
+    { id: 'egorbro', name: 'egorbro', flag: 'ru' },
+    { id: 'taziks', name: 'Taziks228', flag: 'ru' },
+    { id: 'snowfenics', name: 'snowfenics', flag: 'ru' },
+    { id: 'assetick', name: 'Assetick', flag: 'ua' },
+    { id: 'wardik', name: 'shadowardik', flag: 'ru' },
+    { id: 'techobro', name: 'D4RKMODE', flag: 'il' },
+    { id: '?', name: '', flag: '' },
+  ],
+  stages: [
+    {
+      label: '1/16 финала',
+      contestants: [
+        'laffru', 'skoda124', 'maxxikek', 'sanekek',
+        'questbee', 'chabupel', 'deltovv', 'realgangster',
+        'aguzok', 'dokezq', 'khalif', 'maximys',
+        'dikafe', 'vipenka', 'egorbro', 'taziks',
+        'snowfenics', 'assetick', 'wardik', 'techobro',
+        '?', '?', '?', '?',
+        '?', '?', '?', '?',
+        '?', '?', '?', '?',
+      ],
+    },
+    {
+      label: '1/8 финала',
+      contestants: [
+        'laffru', 'maxxikek', '?', 'realgangster',
+        'aguzok', 'maximys', 'dikafe', 'taziks',
+        'snowfenics', '?', '?', '?',
+        '?', '?', '?', '?',
+      ],
+    },
+    {
+      label: 'Четвертьфинал',
+      contestants: ['?', '?', '?', '?', '?', '?', '?', '?'],
+    },
+    {
+      label: 'Полуфинал',
+      contestants: ['?', '?', '?', '?'],
+    },
+    {
+      label: 'Финал',
+      contestants: ['?', '?'],
+    },
+    {
+      label: 'Победитель',
+      contestants: ['?'],
+    },
+  ],
+};

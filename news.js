@@ -1,4 +1,4 @@
-import news from './news.json';
+import news from './news-data.js';
 
 // ── DOM references ──────────────────────────────────────────────────────────
 
