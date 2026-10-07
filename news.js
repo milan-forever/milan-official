@@ -1,3 +1,5 @@
+import news from './news.json';
+
 // ── DOM references ──────────────────────────────────────────────────────────
 
 const newsList        = document.querySelector('.news-list');
@@ -193,18 +195,10 @@ function handleRouting() {
 
 // ── Bootstrap ─────────────────────────────────────────────────────────────────
 
-fetch('./news.json')
-  .then((r) => r.json())
-  .then((news) => {
-    newsData = news;
-    renderNews(news);
-    // If we landed directly on an article URL, render it now that data is ready
-    handleRouting();
-  })
-  .catch((err) => {
-    console.error('Failed to load news:', err);
-    if (newsList) newsList.innerHTML = '<div class="simple-card"><p>Не удалось загрузить новости.</p></div>';
-  });
+newsData = news;
+renderNews(news);
+// If we landed directly on an article URL, render it now that data is ready
+handleRouting();
 
 // Re-render article on every hash change (data is already loaded by this point)
 window.addEventListener('hashchange', handleRouting);

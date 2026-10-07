@@ -1,3 +1,5 @@
+import tournament from './tournament.json';
+
 const flagEmojis = {
   us: '🇺🇸',
   ru: '🇷🇺',
@@ -232,15 +234,9 @@ function layoutBracket() {
   });
 }
 
-fetch('./tournament.json')
-  .then((r) => r.json())
-  .then(({ contestants, stages }) => {
-    renderBracket(contestants, stages);
-    layoutBracket();
-    window.addEventListener('resize', layoutBracket);
-    new ResizeObserver(layoutBracket).observe(columns[0]);
-    document.fonts.ready.then(layoutBracket);
-  })
-  .catch((err) => {
-    console.error('Failed to load tournament data:', err);
-  });
+const { contestants, stages } = tournament;
+renderBracket(contestants, stages);
+layoutBracket();
+window.addEventListener('resize', layoutBracket);
+new ResizeObserver(layoutBracket).observe(columns[0]);
+document.fonts.ready.then(layoutBracket);
