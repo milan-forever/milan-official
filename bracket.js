@@ -5,6 +5,7 @@ const flagEmojis = {
   de: '🇩🇪',
   sk: '🇸🇰',
   uz: '🇺🇿',
+  il: '🇮🇱',
 };
 
 const accentClasses = [
