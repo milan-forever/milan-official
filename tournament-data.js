@@ -22,6 +22,7 @@ export default {
     { id: 'techobro', name: 'D4RKMODE', flag: 'il' },
     { id: 'imp', name: 'impuritiess', flag: 'us' },
     { id: 'pifonchik', name: 'pifon4ik', flag: 'ru' },
+    { id: '???', name: '?', flag: '' },
     { id: '?', name: '', flag: '' },
   ],
   stages: [
@@ -41,9 +42,9 @@ export default {
     {
       label: '1/8 финала',
       contestants: [
-        'laffru', 'maxxikek', '?', 'realgangster',
+        'laffru', 'maxxikek', '???', 'realgangster',
         'aguzok', 'maximys', 'dikafe', 'taziks',
-        'snowfenics', '?', '?', '?',
+        'snowfenics', '???', '?', '?',
         '?', '?', '?', '?',
       ],
     },
