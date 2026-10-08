@@ -44,7 +44,7 @@ export default {
       contestants: [
         'laffru', 'maxxikek', '???', 'realgangster',
         'aguzok', 'maximys', 'dikafe', 'taziks',
-        'snowfenics', '???', '?', '?',
+        'snowfenics', 'techobro', '?', '?',
         '?', '?', '?', '?',
       ],
     },
