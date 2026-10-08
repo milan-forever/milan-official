@@ -25,6 +25,10 @@ function formatDate(isoString) {
   });
 }
 
+function getImagePosition(post) {
+  return ['top', 'center', 'bottom'].includes(post.imagePosition) ? post.imagePosition : 'center';
+}
+
 function copyToClipboard(text, btn) {
   const finish = () => {
     btn.classList.add('copied');
@@ -61,6 +65,7 @@ function createNewsCard(post) {
     img.src = post.image;
     img.alt = post.title;
     img.loading = 'lazy';
+    img.style.objectPosition = getImagePosition(post);
     article.append(img);
   }
 
@@ -150,6 +155,7 @@ function renderArticlePage(id) {
     if (post.image) {
       articleImageEl.src    = post.image;
       articleImageEl.alt    = post.title;
+      articleImageEl.style.objectPosition = getImagePosition(post);
       articleImageEl.hidden = false;
     } else {
       articleImageEl.hidden = true;
