@@ -20,6 +20,8 @@ export default {
     { id: 'assetick', name: 'Assetick', flag: 'ua' },
     { id: 'wardik', name: 'shadowardik', flag: 'ru' },
     { id: 'techobro', name: 'D4RKMODE', flag: 'il' },
+    { id: 'imp', name: 'impuritiess', flag: 'us' },
+    { id: 'pifonchik', name: 'pifon4ik', flag: 'ru' },
     { id: '?', name: '', flag: '' },
   ],
   stages: [
@@ -31,7 +33,7 @@ export default {
         'aguzok', 'dokezq', 'khalif', 'maximys',
         'dikafe', 'vipenka', 'egorbro', 'taziks',
         'snowfenics', 'assetick', 'wardik', 'techobro',
-        '?', '?', '?', '?',
+        'imp', 'pifonchik', '?', '?',
         '?', '?', '?', '?',
         '?', '?', '?', '?',
       ],
