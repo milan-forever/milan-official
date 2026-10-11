@@ -41,7 +41,7 @@ export default {
         'dikafe', 'vipenka', 'egorbro', 'taziks',
         'snowfenics', 'assetick', 'wardik', 'techobro',
         'imp', 'pifonchik', 'remer', 'svarheklol',
-        'durslak', 'vinishko', '?', '?',
+        'durslak', 'vinishko', 'seal', 'aboba',
         '?', '?', '?', '?',
       ],
     },
@@ -51,7 +51,7 @@ export default {
         'laffru', 'maxxikek', '???', 'realgangster',
         'aguzok', 'maximys', 'dikafe', 'taziks',
         'snowfenics', 'techobro', 'imp', 'svarheklol',
-        '?', '?', '?', '?',
+        'durslak', '?', '?', '?',
       ],
     },
     {
