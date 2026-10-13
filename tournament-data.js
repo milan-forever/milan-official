@@ -28,6 +28,10 @@ export default {
     { id: 'vinishko', name: 'Vinishko2', flag: 'ru' },
     { id: 'seal', name: 'Seal48', flag: 'ru' },
     { id: 'aboba', name: '_1_aboba_1_', flag: 'ru' },
+    { id: 'klarnet', name: 'IWantToKlarnet12', flag: 'ru' },
+    { id: 'yooi', name: 'Yoi', flag: 'ua' },
+    { id: 'nekruto', name: 'n9kruto1', flag: 'ru' },
+    { id: 'mr_gene', name: 'MR_GENE_', flag: 'ru' },
     { id: '???', name: '?', flag: '' },
     { id: '?', name: '', flag: '' },
   ],
@@ -42,7 +46,7 @@ export default {
         'snowfenics', 'assetick', 'wardik', 'techobro',
         'imp', 'pifonchik', 'remer', 'svarheklol',
         'durslak', 'vinishko', 'seal', 'aboba',
-        '?', '?', '?', '?',
+        'klarnet', 'nekruto', 'nekruto', 'mr_gene',
       ],
     },
     {
@@ -51,7 +55,7 @@ export default {
         'laffru', 'maxxikek', '???', 'realgangster',
         'aguzok', 'maximys', 'dikafe', 'taziks',
         'snowfenics', 'techobro', 'imp', 'svarheklol',
-        'durslak', '?', '?', '?',
+        'durslak', '???', 'klarnet', '?',
       ],
     },
     {
