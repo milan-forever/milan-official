@@ -46,7 +46,7 @@ export default {
         'snowfenics', 'assetick', 'wardik', 'techobro',
         'imp', 'pifonchik', 'remer', 'svarheklol',
         'durslak', 'vinishko', 'seal', 'aboba',
-        'klarnet', 'nekruto', 'yooi', 'mr_gene',
+        'klarnet', 'yooi', 'nekruto', 'mr_gene',
       ],
     },
     {
