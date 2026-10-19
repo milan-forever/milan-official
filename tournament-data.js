@@ -22,7 +22,7 @@ export default {
     { id: 'techobro', name: 'D4RKMODE', flag: 'il' },
     { id: 'imp', name: 'impuritiess', flag: 'us' },
     { id: 'pifonchik', name: 'pifon4ik', flag: 'ru' },
-    { id: 'remer', name: 'Remer_', flag: 'ru' },
+    { id: 'remer', name: 'Remer_', flag: 'ua' },
     { id: 'svarheklol', name: 'svarheklol', flag: 'ru' },
     { id: 'durslak', name: 'durslak', flag: 'de' },
     { id: 'vinishko', name: 'Vinishko2', flag: 'ru' },
@@ -52,10 +52,10 @@ export default {
     {
       label: '1/8 финала',
       contestants: [
-        'laffru', 'maxxikek', '???', 'realgangster',
+        'laffru', 'maxxikek', 'chabupel', 'realgangster',
         'aguzok', 'maximys', 'dikafe', 'taziks',
         'snowfenics', 'techobro', 'imp', 'svarheklol',
-        'durslak', '???', 'klarnet', '?',
+        'durslak', '???', 'klarnet', '???',
       ],
     },
     {
