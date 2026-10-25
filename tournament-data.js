@@ -60,7 +60,7 @@ export default {
     },
     {
       label: 'Четвертьфинал',
-      contestants: ['maxxikek', '?', '?', '?', '?', '?', '?', '?'],
+      contestants: ['maxxikek', 'realgangster', '?', '?', '?', '?', '?', '?'],
     },
     {
       label: 'Полуфинал',
